@@ -34,10 +34,11 @@ int describeFile() {
         }
     } 
 
+    fclose(p_file);
+    p_file = NULL;
+
     printf("File has %i characters\n", charCount);
     printf("File has %i lines\n", lineCount);
-
-    fclose(p_file);
 
     return 0;  
 }
