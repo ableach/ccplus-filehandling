@@ -16,7 +16,7 @@ int main () {
 }
 
 int describeFile() {
-    FILE *p_file;
+    FILE *p_file = NULL;
     char currentChar;
     int charCount = 0, lineCount = 0;
 
