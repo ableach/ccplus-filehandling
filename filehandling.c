@@ -4,7 +4,16 @@ Date: 16/01/2021
 */
 #include <stdio.h>
 
+int describeFile();
+
 int main () {
+    
+    describeFile();
+
+    return 0;
+}
+
+int describeFile() {
     FILE *p_file;
     char currentChar;
     int charCount = 0, lineCount = 0;
@@ -28,5 +37,5 @@ int main () {
 
     fclose(p_file);
 
-    return 0;
+    return 0;  
 }
