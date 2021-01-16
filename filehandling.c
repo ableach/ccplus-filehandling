@@ -13,13 +13,38 @@ int convertFileToLowerCase();
 int getFileLength(FILE *p_file);
 int printFile(FILE *p_file);
 int reverseFile();
+int reverseFileWithFseek();
 
 int main () {
     
+    reverseFileWithFseek();
     reverseFile();
-    return 0;
     convertFileToLowerCase();
     describeFile();
+
+    return 0;
+}
+
+int reverseFileWithFseek() {
+    int currentPostition = 0, i = 0;
+
+    FILE *p_sourceFile = NULL;
+    p_sourceFile = fopen(SOURCEFILENAME, "r");
+    if (p_sourceFile == NULL) {
+        printf("Unable to open source file.\n");
+        return -1;
+    }
+
+    // move the file pointer
+    fseek(p_sourceFile, 0 , SEEK_END);
+    // get the filepointer position
+    currentPostition = ftell(p_sourceFile);
+
+    while ( i<currentPostition ) {
+        i++;
+        fseek(p_sourceFile, -i , SEEK_END); // move i chars back from the end
+        printf("%c",fgetc(p_sourceFile));
+    }
 
     return 0;
 }
