@@ -7,6 +7,7 @@ Date: 16/01/2021
 #define FILENAME "testdata.txt"
 
 int describeFile();
+int getFileLength(FILE *p_file);
 
 int main () {
     
@@ -26,13 +27,16 @@ int describeFile() {
         printf("Unable to open file.\n");
         return -1;
     }
-
-    while ( (currentChar = fgetc(p_file)) != EOF ) {
-        charCount++;
-        if ( currentChar == '\n' ) {
-            lineCount++;
-        }
-    } 
+     
+    if ( getFileLength(p_file) > 1 ) {
+        lineCount++;
+        while ( (currentChar = fgetc(p_file)) != EOF ) {
+            charCount++;
+            if ( currentChar == '\n' ) {
+                lineCount++;
+            }
+        } 
+    }
 
     fclose(p_file);
     p_file = NULL;
@@ -41,4 +45,14 @@ int describeFile() {
     printf("File has %i lines\n", lineCount);
 
     return 0;  
+}
+
+int getFileLength(FILE *p_file) {
+    int fileLength = 0;
+
+    fseek(p_file, 0L, SEEK_END);
+    fileLength = ftell(p_file);
+    fseek(p_file, 0L, SEEK_SET);
+
+    return fileLength;
 }
