@@ -6,8 +6,8 @@ Date: 16/01/2021
 
 int main () {
     FILE *p_file;
-    char str[80];
-    int lineCount = 0;
+    char currentChar;
+    int charCount = 0, lineCount = 0;
 
     p_file = fopen("testdata.txt", "r");
 
@@ -16,10 +16,14 @@ int main () {
         return -1;
     }
 
-    while ( fgets(str,81,p_file)!=NULL ) {
-        lineCount++;
+    while ( (currentChar = fgetc(p_file)) != EOF ) {
+        charCount++;
+        if ( currentChar == '\n' ) {
+            lineCount++;
+        }
     } 
 
+    printf("File has %i characters\n", charCount);
     printf("File has %i lines\n", lineCount);
 
     fclose(p_file);
