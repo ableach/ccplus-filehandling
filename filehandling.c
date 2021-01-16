@@ -4,6 +4,8 @@ Date: 16/01/2021
 */
 #include <stdio.h>
 
+#define FILENAME "testdata.txt"
+
 int describeFile();
 
 int main () {
@@ -18,7 +20,7 @@ int describeFile() {
     char currentChar;
     int charCount = 0, lineCount = 0;
 
-    p_file = fopen("testdata.txt", "r");
+    p_file = fopen(FILENAME, "r");
 
     if (p_file == NULL) {
         printf("Unable to open file.\n");
