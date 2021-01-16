@@ -12,11 +12,38 @@ int describeFile();
 int convertFileToLowerCase();
 int getFileLength(FILE *p_file);
 int printFile(FILE *p_file);
+int reverseFile();
 
 int main () {
     
+    reverseFile();
+    return 0;
     convertFileToLowerCase();
     describeFile();
+
+    return 0;
+}
+
+int reverseFile() {
+    FILE *p_sourceFile = NULL;
+    int storeItem = 0, fileLength = 0;
+    char currentChar;
+    p_sourceFile = fopen(SOURCEFILENAME, "r");
+    if (p_sourceFile == NULL) {
+        printf("Unable to open source file.\n");
+        return -1;
+    }
+
+    fileLength = getFileLength(p_sourceFile);
+    char fileBuffer[fileLength];
+    
+    while ( (currentChar = fgetc(p_sourceFile)) != EOF ) { // read source forwards
+        fileBuffer[storeItem++] = currentChar;
+    }
+
+    for ( int i=fileLength; i>=0; i--) {
+        printf("%c",fileBuffer[i]);
+    }
 
     return 0;
 }
