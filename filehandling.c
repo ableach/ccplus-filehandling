@@ -31,9 +31,10 @@ int describeFile() {
     if ( getFileLength(p_file) > 1 ) {
         lineCount++;
         while ( (currentChar = fgetc(p_file)) != EOF ) {
-            charCount++;
             if ( currentChar == '\n' ) {
                 lineCount++;
+            } else {
+                charCount++;
             }
         } 
     }
@@ -41,7 +42,7 @@ int describeFile() {
     fclose(p_file);
     p_file = NULL;
 
-    printf("File has %i characters\n", charCount);
+    printf("File has %i characters, excluding line endings\n", charCount);
     printf("File has %i lines\n", lineCount);
 
     return 0;  
