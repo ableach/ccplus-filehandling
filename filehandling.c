@@ -3,15 +3,75 @@ Author: A Bleach
 Date: 16/01/2021
 */
 #include <stdio.h>
+#include <ctype.h>
 
-#define FILENAME "testdata.txt"
+#define SOURCEFILENAME "testdata.txt"
+#define DESTINATIONFILENAME "edited.txt"
 
 int describeFile();
+int convertFileToLowerCase();
 int getFileLength(FILE *p_file);
+int printFile(FILE *p_file);
 
 int main () {
     
+    convertFileToLowerCase();
     describeFile();
+
+    return 0;
+}
+
+int convertFileToLowerCase() {
+    FILE *p_sourceFile = NULL;
+    FILE *p_destinationFile = NULL;
+    char currentChar;
+
+    p_sourceFile = fopen(SOURCEFILENAME, "r");
+    if (p_sourceFile == NULL) {
+        printf("Unable to open source file.\n");
+        return -1;
+    }
+
+    p_destinationFile = fopen(DESTINATIONFILENAME, "w");
+    if (p_destinationFile == NULL) {
+        printf("Unable to open or create destination file.\n");
+        return -1;
+    }
+
+    while ( (currentChar = fgetc(p_sourceFile)) != EOF ) {
+        if ( islower(currentChar) ) {
+            currentChar -= 32; 
+        }
+        fputc(currentChar,p_destinationFile);
+    }
+
+    fclose(p_sourceFile);
+    p_sourceFile = NULL;
+
+    fclose(p_destinationFile);
+    p_destinationFile = NULL;
+
+    p_destinationFile = fopen(DESTINATIONFILENAME, "r");
+    if (p_destinationFile == NULL) {
+        printf("Unable to open destination file for reading.\n");
+        return -1;
+    }
+    printFile(p_destinationFile);
+
+    fclose(p_destinationFile);
+    p_destinationFile = NULL;
+
+    remove(DESTINATIONFILENAME);
+
+    return 0;
+}
+
+int printFile(FILE *p_file) {
+    fseek(p_file, 0L, SEEK_SET);
+    char currentLine[80];
+    while ( fgets(currentLine, 81, p_file) != NULL ) {
+        puts(currentLine);
+    }
 
     return 0;
 }
@@ -21,7 +81,7 @@ int describeFile() {
     char currentChar;
     int charCount = 0, lineCount = 0;
 
-    p_file = fopen(FILENAME, "r");
+    p_file = fopen(SOURCEFILENAME, "r");
 
     if (p_file == NULL) {
         printf("Unable to open file.\n");
